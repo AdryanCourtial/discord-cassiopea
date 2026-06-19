@@ -99,14 +99,10 @@ export const InstanceCommands = async () => {
     try {
         const response = await fetch(request);
 
-        const data = await fetch(new Request(url, {
+        await fetch(new Request(url, {
             method: "GET",
             headers
         }));
-
-        const commands = await data.json();
-
-        console.log("Registered commands:", commands);
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);

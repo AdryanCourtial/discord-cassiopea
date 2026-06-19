@@ -45,13 +45,15 @@ client.on("interactionCreate", async (interaction) => {
           
           const earlierRole = roles.find(role => role.name.includes("Flex"));
 
+          const roleName = `${RankRoleConfig[rank].name} Flex ${RankRoleConfig[rank].icon}`;
+
           if (earlierRole) {
               await RolesDiscord.desatribuateRoles(interaction, earlierRole.id);
           }
 
-          RolesDiscord.attribuateOrCreateRoles(interaction, rank, {
+          await RolesDiscord.attribuateOrCreateRoles(interaction, roleName, {
             ...RankRoleConfig[rank],
-            name: `${RankRoleConfig[rank].name} Flex ${RankRoleConfig[rank].icon}`,
+            name: roleName
           });
 
           await interaction.reply(`Félicitations ! Votre rang en 5v5 flexible a été défini sur ${rank}.`);
@@ -70,9 +72,11 @@ client.on("interactionCreate", async (interaction) => {
               await RolesDiscord.desatribuateRoles(interaction, earlierRole.id);
           }
 
-          RolesDiscord.attribuateOrCreateRoles(interaction, rank, {
+          const roleName = `${RankRoleConfig[rank].name} Solo/Duo ${RankRoleConfig[rank].icon}`;
+
+          await RolesDiscord.attribuateOrCreateRoles(interaction, roleName, {
             ...RankRoleConfig[rank],
-            name: `${RankRoleConfig[rank].name} Solo/Duo ${RankRoleConfig[rank].icon}`,
+            name: roleName
           });
 
           await interaction.reply(`Félicitations ! Votre rang en solo/duo a été défini sur ${rank}.`);

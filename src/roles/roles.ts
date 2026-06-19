@@ -61,7 +61,7 @@ export class RolesDiscord {
         return roles;
     }
 
-    public static async attribuateOrCreateRoles(interaction: Interaction, name: string, options?: RoleCreateOptions): Promise<void> {
+    public static async attribuateOrCreateRoles(interaction: Interaction, id: string, options?: RoleCreateOptions): Promise<void> {
 
         if (!interaction.isChatInputCommand()) {
             throw new Error("Interaction is not a chat input command.");
@@ -77,17 +77,22 @@ export class RolesDiscord {
             throw new Error("Member is not a GuildMember.");
         }
 
-        let role = interaction.guild.roles.cache.find(
-            role => role.name === name
-        );
+        console.log("Member roles:", id);
+
+        // Chercher le rôle par son nom au lieu de chercher par ID
+        let role = interaction.guild.roles.cache.find(r => r.name === id);
+
+        console.log("Role found:", role);
 
         if (!role) {
+
+            console.log("Role not found, creating new role:", options?.name);
+
             if (!options) {
                 throw new Error("Role options are required to create a new role.");
             }
 
             role = await this.createRoles(interaction, {
-                name,
                 ...options,
                 icon: undefined,
             });
