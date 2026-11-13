@@ -5,7 +5,9 @@ import { InstanceCommands } from "./config/commands-builder";
 import { Commands, SubCommandsRank } from "./types/commands.type";
 import { RolesDiscord } from "./roles/roles";
 import { RankRoleConfig } from "./config/roles.config";
-
+import nodeCron from "node-cron";
+import { getProchaineSemaine } from "./utils";
+import { EnvoieSondageDispos } from "./func-utils/func-utils";
 require('dotenv').config();
 
 const client = CreateClient();
@@ -85,6 +87,24 @@ client.on("interactionCreate", async (interaction) => {
       return
 
     }
+});
+
+// Tous les Vendredis à 18h
+nodeCron.schedule('0 18 * * 5', async () => {
+        const CHANNELS_IDS = [
+            '1517166696656539698',
+            '1503107030582562939'
+        ];
+
+        await Promise.allSettled(
+            CHANNELS_IDS.map(channel_id =>
+                EnvoieSondageDispos(channel_id, client)
+            )
+        );
+
+    },
+    {
+    timezone: 'Europe/Paris'
 });
 
 client.login(process.env.TOKEN).catch(err => {
