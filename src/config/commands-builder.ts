@@ -1,3 +1,5 @@
+import lastUpdate from "../commands/lastUpdate";
+import ping from "../commands/ping";
 import { Ranks } from "../types/rank.type";
 
 const ranks_choices = [
@@ -40,46 +42,48 @@ const ranks_choices = [
 ]
 
 const json = [
-  {
-    name: "help",
-    description: "Renvoie la liste de toutes les commandes disponibles",
-    type: 1
-  },
-  {
-    name: "rank",
-    description: "Permet de définir le rank d'un joueur",
-    type: 1,
-    options: [
-      {
-        name: "solo_duo",
-        description: "Permet de définir le rank d'un joueur en file solo/duo",
+    {
+        name: "help",
+        description: "Renvoie la liste de toutes les commandes disponibles",
+        type: 1
+    },
+    {
+        name: "rank",
+        description: "Permet de définir le rank d'un joueur",
         type: 1,
         options: [
-          {
-            name: "rank",
-            description: "Choisissez votre rang",
-            type: 3,
-            required: true,
-            choices: ranks_choices
-          }
+        {
+            name: "solo_duo",
+            description: "Permet de définir le rank d'un joueur en file solo/duo",
+            type: 1,
+            options: [
+            {
+                name: "rank",
+                description: "Choisissez votre rang",
+                type: 3,
+                required: true,
+                choices: ranks_choices
+            }
+            ]
+        },
+        {
+            name: "flex",
+            description: "Permet de définir le rank d'un joueur en file flexible",
+            type: 1,
+            options: [
+            {
+                name: "rank",
+                description: "Choisissez votre rang",
+                type: 3,
+                required: true,
+                choices: ranks_choices
+            }
+            ]
+        }
         ]
-      },
-      {
-        name: "flex",
-        description: "Permet de définir le rank d'un joueur en file flexible",
-        type: 1,
-        options: [
-          {
-            name: "rank",
-            description: "Choisissez votre rang",
-            type: 3,
-            required: true,
-            choices: ranks_choices
-          }
-        ]
-      }
-    ]
-  }
+    },
+    ping.data.toJSON(),
+    lastUpdate.data.toJSON()
 ];
 
 export const InstanceCommands = async () => {

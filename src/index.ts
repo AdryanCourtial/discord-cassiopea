@@ -1,35 +1,13 @@
-import { Collection, Events, Role } from "discord.js";
 import { CreateClient } from "./config/client";
-import ping from "./commands/ping";
 import { InstanceCommands } from "./config/commands-builder";
 import { Commands, SubCommandsRank } from "./types/commands.type";
 import { RolesDiscord } from "./roles/roles";
 import { RankRoleConfig } from "./config/roles.config";
 import nodeCron from "node-cron";
-import { getProchaineSemaine } from "./utils";
 import { EnvoieSondageDispos } from "./func-utils/func-utils";
-import lastUpdate from "./commands/lastUpdate";
 require('dotenv').config();
 
 const client = CreateClient();
-
-const formattedRank = (name: string, icon: string, type: string) => `${name} ${type} ${icon}`
-
-const commands = [ping, lastUpdate];
-
-client.once(Events.ClientReady, async (readyClient) => {
-  console.log(`✅ Connecté en tant que ${readyClient.user.tag}`);
-
-  try {
-    await readyClient.application.commands.set(
-      commands.map((command) => command.data.toJSON())
-    );
-
-    console.log("✅ Commandes Discord enregistrées !");
-  } catch (error) {
-    console.error("❌ Erreur enregistrement :", error);
-  }
-});
 
 client.on('clientReady', () => {
     if (!client.user) {
