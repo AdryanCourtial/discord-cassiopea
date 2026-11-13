@@ -108,9 +108,12 @@ export const InstanceCommands = async () => {
             headers
         }));
 
+        
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
+        
+        return response.body
 
     } catch (error) {
         console.error("Error registering command:", error);
