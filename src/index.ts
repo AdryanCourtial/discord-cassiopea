@@ -95,7 +95,7 @@ client.on("interactionCreate", async (interaction) => {
 });
 
 // Tous les Vendredis à 18h
-nodeCron.schedule('0 18 * * 5', async () => {
+nodeCron.schedule('39 16 * * 5', async () => {
         const CHANNELS_IDS = [
             '1517166696656539698',
             '1503107030582562939'
