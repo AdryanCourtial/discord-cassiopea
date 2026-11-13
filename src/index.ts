@@ -5,6 +5,8 @@ import { RolesDiscord } from "./roles/roles";
 import { RankRoleConfig } from "./config/roles.config";
 import nodeCron from "node-cron";
 import { EnvoieSondageDispos } from "./func-utils/func-utils";
+import lastUpdate from "./commands/lastUpdate";
+import ping from "./commands/ping";
 require('dotenv').config();
 
 const client = CreateClient();
@@ -81,6 +83,14 @@ client.on("interactionCreate", async (interaction) => {
 
       return
 
+    }
+
+    if(interaction.commandName === Commands.UPDATE) {
+        lastUpdate.execute(interaction)
+    }
+
+    if(interaction.commandName === Commands.PING) {
+        ping.execute(interaction)
     }
 });
 
