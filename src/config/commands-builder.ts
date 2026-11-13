@@ -87,35 +87,35 @@ const json = [
 ];
 
 export const InstanceCommands = async () => {
-
     const url = `${process.env.DISCORD_API_URL}/commands`;
 
-    const headers = new Headers();
-    headers.append("Authorization", `Bot ${process.env.TOKEN}`);
-    headers.append("Content-Type", "application/json");
+    console.log(
+        "📦 Commandes à enregistrer :",
+        json.map(command => command.name)
+    );
 
-    const request = new Request(url, {
+    const response = await fetch(url, {
         method: "PUT",
-        body: JSON.stringify(json),
-        headers
+        headers: {
+            Authorization: `Bot ${process.env.TOKEN}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(json)
     });
 
-    try {
-        const response = await fetch(request);
+    const result = await response.json();
 
-        await fetch(new Request(url, {
-            method: "GET",
-            headers
-        }));
-
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        return response
-
-    } catch (error) {
-        console.error("Error registering command:", error);
+    if (!response.ok) {
+        console.error("❌ Erreur API Discord :", result);
+        throw new Error(`HTTP ${response.status}`);
     }
+
+    console.log(
+        "✅ Commandes confirmées par Discord :",
+        Array.isArray(result)
+            ? result.map((command: any) => command.name)
+            : result
+    );
+
+    return result;
 };
